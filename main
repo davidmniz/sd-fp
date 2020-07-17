@@ -1,0 +1,324 @@
+#include <iostream>
+#include <stdlib.h>
+#define max 5
+using namespace std;
+
+struct User
+{
+    string username[5] = {"member","bagus", "aku"};
+    string password[5] = {"member","2679", "saya"};
+
+} user;
+
+struct Tumpukan
+{
+    int atas;
+    int data[max];
+    string nama[10];
+    int total[10];
+    int *Pointer_total[10];
+} Tumpukan;
+
+void awal()
+{
+    Tumpukan.atas = -1;
+}
+
+int kosong()
+{
+    if(Tumpukan.atas== -1)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+int penuh ()
+{
+    if(Tumpukan.atas == max)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+void input()
+{
+    if (kosong()==1)
+    {
+        Tumpukan.atas++;
+        cout<<"Input Tgl,Bln,Thn (01022020) : ";
+        cin>>Tumpukan.data[Tumpukan.atas];
+        cout<<"Nama Barang       : ";
+        cin>>Tumpukan.nama[Tumpukan.atas];
+        cout<<"Total Barang      : ";
+        cin>>Tumpukan.total[Tumpukan.atas];
+    }
+    else if(penuh()==0)
+    {
+        Tumpukan.atas++;
+        cout<<"Input Tgl,Bln,Thn (01022020) : ";
+        cin>>Tumpukan.data[Tumpukan.atas];
+        cout<<"Nama Barang       : ";
+        cin>>Tumpukan.nama[Tumpukan.atas];
+        cout<<"Total Barang      : ";
+        cin>>Tumpukan.total[Tumpukan.atas];
+    }
+    else
+    {
+        cout <<"Data Penuh"<<endl;
+    }
+}
+
+void hapus()
+{
+    if (kosong()== 0)
+    {
+        Tumpukan.atas--;
+        cout<<"Data Barang Berhasil Dihapus"<<endl;
+    }
+}
+
+void ambil()
+{
+    string nama;
+    int barang[100];
+    cout<<"Input Nama Barang : ";
+    cin>>nama;
+    for (int i=1; i<=Tumpukan.atas; i++)
+    {
+        if(nama == Tumpukan.nama[i])
+        {
+            cout<<"Input Jumlah Yang Diambil : ";
+            cin>>barang[i];
+            Tumpukan.total[i] -= barang[i];
+            break;
+        }
+    }
+}
+
+void tampil()
+{
+    if(kosong()==0)
+    {
+        for (int i=1; i<=Tumpukan.atas; i++)
+        {
+            cout<<"| "<<i<<". "<<Tumpukan.data[i]<<" <> "<<Tumpukan.nama[i]<<" <> "<<Tumpukan.total[i]<<" <> "<<&(Tumpukan.Pointer_total[i])<<" |"<<endl;
+        }
+        cout<<"----------------------------------------------"<<endl;
+    }
+}
+
+void judul()
+{
+    cout<<"+--------------------------------------------+"<<endl;
+    cout<<"|                                            |"<<endl;
+    cout<<"|             Program Stok Barang            |"<<endl;
+    cout<<"|                                            |"<<endl;
+    cout<<"+--------------------------------------------+"<<endl;
+};
+
+string login()
+{
+    bool hasil_login = false;
+    while(hasil_login==false)
+    {
+        string a,b;
+        string hasil ;
+        system("CLS");
+        cout << "\n\n";
+        cout << "\tLogin sebagai member" << endl << endl;
+        cout << "\tUsername\t: ";
+        cin >> a;
+        //cin.ignore();
+        cout << "\tPassword\t: ";
+        cin >> b;
+        //cin.ignore();
+
+        for (int i = 0; i < sizeof(user.username); i++)
+        {
+
+            if (a == user.username[i] && b == user.password[i])
+            {
+
+                hasil="benar";
+                hasil_login=true;
+               // break;
+
+            }
+            else
+            {
+
+                hasil="salah";
+            }
+
+        }
+
+        if(hasil=="benar")
+        {
+            cout << "\tLogin Sukses" << endl << endl;
+
+        }
+        else
+        {
+            cout << "\tLogin Gagal" << endl << endl;
+
+        }
+    }
+
+}
+
+
+
+void menu_utama()
+{
+pertama:
+    int no;
+    judul();
+    cout<<"Menu Utama  : "<<endl;
+    cout<<"1. Input Barang"<<endl;
+    cout<<"2. Ambil Barang"<<endl;
+    cout<<"3. Tampil Barang"<<endl;
+    cout<<"4. Hapus Barang"<<endl;
+    cout<<"5. Anggota"<<endl;
+    cout<<"6. Keluar"<<endl;
+    cout<<endl;
+    cout<<"Masukkan Nomor Pilihan : ";
+    cin>>no;
+    switch (no)
+    {
+    case 1 :
+        system("cls");
+        judul();
+        input();
+        system("cls");
+        goto pertama;
+    case 2 :
+        system("cls");
+        judul();
+        cout<<endl;
+        ambil();
+        system("cls");
+        goto pertama;
+    case 3 :
+        system("cls");
+        judul();
+        tampil();
+        cout<<endl;
+        system("pause");
+        system("cls");
+        goto pertama;
+    case 4 :
+        system("cls");
+        judul();
+        hapus();
+        cout<<endl;
+        system("pause");
+        system("cls");
+        goto pertama;
+    case 6 :
+        system("cls");
+        exit(0);
+    case 5 :
+kedua:
+        system("cls");
+        judul();
+        int pil;
+        cout<<"1. Inputkan Data Kehadiran"<<endl;
+        cout<<"2. Lihat Data Kehadiran"<<endl;
+        cout<<"3. Cari Anggota"<<endl;
+        cout<<"4. Kembali"<<endl;
+        cout<<endl;
+        cout<<"Masukkan No pilihan (1..4) : ";
+        cin>>pil;
+        switch (pil)
+        {
+        case 1 :
+            /*system("cls");
+            judul();
+            int berapa;
+            cout<<"Berapa Banyak Anggota : ";
+            cin>>berapa;
+            for(int i=1; i<=berapa; i++)
+            {
+                cout<<"Input ID Anggota : ";
+                cin>>Anggota.ID[i];
+                cout<<"Input Username Anggota : ";
+                cin>>Anggota.username[i];
+            }*/
+            goto kedua;
+        case 2 :
+            system("cls");
+            judul();
+            /* int temp,j;
+             for (int i=1; i<=berapa; i++)
+             {
+                 for(j=i+1; j<=berapa; j++)
+                 {
+                     if(Anggota.ID[i]>Anggota.ID[j])
+                     {
+                         //temp=Anggota.ID[i];
+                         Anggota.ID[i]=Anggota.ID[j];
+                         Anggota.ID[i]=Anggota.ID[j];
+                         // Anggota.ID[j]=temp;
+                     }
+                 }*/
+            // }
+            /*for(int i=1; i<=berapa; i++)
+            {
+                cout<<i<<". ID\t    : "<<Anggota.ID[i]<<endl<<"   Username : "<<Anggota.username[i]<<endl;
+            }*/
+            cout<<endl;
+            system("pause");
+            goto kedua;
+        case 3 :
+            /*system("cls");
+            judul();
+            int tanda,ada,cari;
+            cout<<endl;
+            cout<<"Input ID Yang Dicari : ";
+            cin>>cari;
+            for(int i=1; i<=berapa; i++)
+            {
+                if (cari == Anggota.ID[i])
+                {
+                    tanda = i;
+                    ada = tanda;
+                    break;
+                }
+            }
+            if (tanda == ada)
+            {
+                cout<<"Anggota dengan ID "<<cari<<" Telah Hadir"<<endl;
+            }
+            else
+            {
+                cout<<"Anggota dengan ID "<<cari<<" Tidak Ada Keterangan"<<endl;
+            }
+            cout<<endl;*/
+            system("pause");
+            goto kedua;
+        case 4 :
+            system("cls");
+            goto pertama;
+        }
+    }
+}
+
+
+
+
+
+int main()
+{
+    login();
+    cout<<"\n\n\n";
+    menu_utama();
+    return 0;
+}
